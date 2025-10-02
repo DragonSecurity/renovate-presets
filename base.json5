@@ -1,10 +1,5 @@
 {
-  // Central, org-wide Renovate preset
-  // Reference from repos as: "github>dragonsecurity/renovate-presets:base"
-
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-
-  // Good defaults across many ecosystems
   "extends": [
     "config:recommended",
     ":semanticCommits",
@@ -12,47 +7,27 @@
     ":timezone(Europe/Dublin)"
   ],
 
-  // Don’t limit managers unless you really need to
-  // (Renovate auto-detects; this makes it work for “most languages” out of the box)
-  // Remove specific managers if they cause noise.
-  // "enabledManagers": ["dockerfile","gomod","npm","pip_requirements","pip-compile","poetry","gradle","maven","nuget","bundler","cargo","composer","pub","helm-values","helmfile","terraform","github-actions","pre-commit","docker-compose","pipenv","pnpm","yarn"] 
-
   "schedule": ["before 6am on monday"],
   "rebaseWhen": "conflicted",
-  "dependencyDashboard": true,
-  "rangeStrategy": "bump",            // keep ranges moving forward
-  "prHourlyLimit": 10,
-  "prConcurrentLimit": 20,
 
-  // Auto-merge defaults (safe)
   "platformAutomerge": true,
   "automergeStrategy": "squash",
 
+  // Don’t limit managers unless needed; Renovate auto-detects
+  // If you *do* want to lock it down, re-add enabledManagers.
+  // "enabledManagers": ["dockerfile", "gomod", "docker-compose", "npm"],
+
   "packageRules": [
-    // Auto-merge “safe” updates everywhere
     {
       "matchUpdateTypes": ["patch", "pin", "digest"],
       "automerge": true,
       "automergeType": "pr"
     },
-
-    // Minor updates for widely-safe ecosystems
     {
-      "matchManagers": ["gomod", "npm", "github-actions", "dockerfile"],
+      "matchManagers": ["gomod"],
       "matchUpdateTypes": ["minor"],
       "automerge": true,
       "automergeType": "pr"
-    },
-
-    // Grouping examples (tune as you like)
-    {
-      "matchManagers": ["github-actions"],
-      "groupName": "GitHub Actions",
-      "separateMajorMinor": false
-    },
-    {
-      "matchManagers": ["dockerfile", "docker-compose"],
-      "groupName": "Docker base images"
     }
   ]
 }
