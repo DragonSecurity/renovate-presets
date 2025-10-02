@@ -13,10 +13,6 @@
   "platformAutomerge": true,
   "automergeStrategy": "squash",
 
-  // Don’t limit managers unless needed; Renovate auto-detects
-  // If you *do* want to lock it down, re-add enabledManagers.
-  // "enabledManagers": ["dockerfile", "gomod", "docker-compose", "npm"],
-
   "packageRules": [
     {
       "matchUpdateTypes": ["patch", "pin", "digest"],
