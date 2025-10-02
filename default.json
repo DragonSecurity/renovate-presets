@@ -4,7 +4,7 @@
     "config:recommended",
     ":semanticCommits",
     ":semanticCommitTypeAll(chore)",
-    ":timezone(Europe/Dublin)"
+    ":timezone(Europe/Dublin)",
     "helpers:pinGitHubActionDigests"
   ],
   "rebaseWhen": "conflicted",
