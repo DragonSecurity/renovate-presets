@@ -6,13 +6,9 @@
     ":semanticCommitTypeAll(chore)",
     ":timezone(Europe/Dublin)"
   ],
-
-  "schedule": ["before 6am on monday"],
   "rebaseWhen": "conflicted",
-
   "platformAutomerge": true,
   "automergeStrategy": "squash",
-
   "packageRules": [
     {
       "matchUpdateTypes": ["patch", "pin", "digest"],
