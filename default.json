@@ -1,78 +1,82 @@
 {
-         "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-         "extends": [
-           "config:recommended",
-           ":semanticCommits",
-           ":semanticCommitTypeAll(chore)",
-           ":timezone(Europe/Dublin)",
-           "helpers:pinGitHubActionDigests",
-           "docker:pinDigests",
-           "helpers:pinGitHubActionDigests",
-           ":pinDevDependencies"
-         ],
-         "rebaseWhen": "conflicted",
-         "rangeStrategy": "bump",
-         "dependencyDashboard": true,
-         "dependencyDashboardAutoclose": true,
-         "labels": ["dependencies"],
-         "prConcurrentLimit": 20,
-         "prHourlyLimit": 10,
-         "platformAutomerge": false,
-         "automergeStrategy": "squash",
-         "separateMinorPatch": true,
-         "separateMultipleMajor": true,
-         "separateMultipleMinor": true,
-         "lockFileMaintenance": {"enabled": true},
-         "packageRules": [
-           {
-             "matchUpdateTypes": [
-               "patch",
-               "digest",
-               "pin",
-               "pinDigest",
-               "bump",
-               "minor",
-               "lockFileMaintenance"
-             ],
-             "automerge": true,
-             "automergeType": "pr",
-             "prBodyNotes": ["Auto-merged by preset (patch/pin/digest/minor)."]
-           },
-           {"matchManagers": ["gomod"], "postUpdateOptions": ["gomodTidy"]},
-           {
-             "matchManagers": ["gomod"],
-             "matchUpdateTypes": ["minor"],
-             "automerge": true,
-             "automergeType": "pr",
-             "prBodyNotes": ["Auto-merged by preset (gomod minor)."]
-           },
-           {
-             "matchManagers": ["github-actions"],
-             "matchUpdateTypes": ["patch", "minor"],
-             "automerge": true,
-             "automergeType": "pr"
-           },
-           {
-             "matchManagers": ["dockerfile", "docker-compose"],
-             "matchUpdateTypes": ["digest"],
-             "groupName": "Docker digests"
-           },
-           {
-             "matchManagers": ["npm", "pnpm", "yarn"],
-             "matchUpdateTypes": ["minor"],
-             "minimumReleaseAge": "3 days"
-           },
-           {
-             "matchUpdateTypes": ["security"],
-             "automerge": true,
-             "automergeType": "pr",
-             "prPriority": 1
-           },
-           {"matchUpdateTypes": ["minor", "major"], "automerge": false},
-           {
-             "matchUpdateTypes": ["major"],
-             "draftPR": true,
-             "prBodyNotes": ["Draft because this is a major update."]
-           }
-         ]
-       }
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)",
+    ":timezone(Europe/Dublin)",
+    "helpers:pinGitHubActionDigests",
+    "docker:pinDigests",
+    ":pinDevDependencies"
+  ],
+
+  "rebaseWhen": "conflicted",
+  "rangeStrategy": "bump",
+  "dependencyDashboard": true,
+  "dependencyDashboardAutoclose": true,
+  "labels": ["dependencies"],
+  "prConcurrentLimit": 20,
+  "prHourlyLimit": 10,
+
+  "platformAutomerge": false,
+  "automergeStrategy": "squash",
+  "separateMinorPatch": true,
+  "separateMultipleMajor": true,
+  "separateMultipleMinor": true,
+  "lockFileMaintenance": { "enabled": true },
+
+  "packageRules": [
+    {
+      "description": "Instant, no-PR updates for safest classes",
+      "matchUpdateTypes": ["patch", "pin", "digest", "lockFileMaintenance"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "description": "Minor updates: PR-based but merge immediately (skip waiting for CI)",
+      "matchUpdateTypes": ["minor"],
+      "automerge": true,
+      "automergeType": "pr",
+      "ignoreTests": true
+    },
+    {
+      "description": "Go tidy after updates",
+      "matchManagers": ["gomod"],
+      "postUpdateOptions": ["gomodTidy"]
+    },
+    {
+      "description": "GitHub Actions patch/minor allowed",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true,
+      "automergeType": "pr",
+      "ignoreTests": true
+    },
+    {
+      "description": "Group Docker digests",
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "matchUpdateTypes": ["digest"],
+      "groupName": "Docker digests"
+    },
+    {
+      "description": "JS minors: optional cool-down; remove if you want truly instant",
+      "matchManagers": ["npm", "pnpm", "yarn"],
+      "matchUpdateTypes": ["minor"],
+      "minimumReleaseAge": "3 days",
+    },
+    {
+      "description": "Security updates: always merge",
+      "matchUpdateTypes": ["security"],
+      "automerge": true,
+      "automergeType": "pr",
+      "prPriority": 1,
+      "ignoreTests": true
+    },
+    {
+      "description": "Keep majors for review (not draft)",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "draftPR": false
+    }
+  ]
+}
