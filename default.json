@@ -5,20 +5,28 @@
     ":semanticCommits",
     ":semanticCommitTypeAll(chore)",
     ":timezone(Europe/Dublin)",
-    "helpers:pinGitHubActionDigests"
+    "schedule:automergeDaily",
+    "helpers:pinGitHubActionDigests",
+    "docker:pinDigests",
+    "helpers:pinGitHubActionDigests",
+    ":pinDevDependencies"
   ],
   "rebaseWhen": "conflicted",
   "rangeStrategy": "bump",
   "dependencyDashboard": true,
+  "dependencyDashboardAutoclose": true
   "labels": ["dependencies"],
   "prConcurrentLimit": 20,
   "prHourlyLimit": 10,
   "platformAutomerge": false,
   "automergeStrategy": "squash",
-
+  "separateMinorPatch": true,
+  "separateMultipleMajor": true,
+  "separateMultipleMinor": true,
+  "lockFileMaintenance": { "enabled": true }
   "packageRules": [
     {
-      "matchUpdateTypes": ["patch", "pin", "digest", "minor"],
+      "matchUpdateTypes": ["patch", "digest", "pin", "pinDigest", "bump", "minor", "lockFileMaintenance"],
       "automerge": true,
       "automergeType": "pr",
       "prBodyNotes": ["Auto-merged by preset (patch/pin/digest/minor)."]
