@@ -10,8 +10,13 @@
     ":pinDevDependencies"
   ],
 
-  "rebaseWhen": "conflicted",
+  "rebaseWhen": "auto",
   "recreateWhen": "auto",
+  "recreateClosed": true,
+  "prNotPendingHours": 12,
+  "pruneStaleBranches": true,
+  "rollbackPrs": true,
+
   "rangeStrategy": "bump",
   "dependencyDashboard": true,
   "dependencyDashboardAutoclose": true,
@@ -63,7 +68,7 @@
       "description": "JS minors: optional cool-down; remove if you want truly instant",
       "matchManagers": ["npm", "pnpm", "yarn"],
       "matchUpdateTypes": ["minor"],
-      "minimumReleaseAge": "3 days",
+      "minimumReleaseAge": "3 days"
     },
     {
       "description": "Security updates: always merge",
