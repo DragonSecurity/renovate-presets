@@ -11,6 +11,7 @@
   ],
 
   "rebaseWhen": "conflicted",
+  "recreateWhen": "auto",
   "rangeStrategy": "bump",
   "dependencyDashboard": true,
   "dependencyDashboardAutoclose": true,
