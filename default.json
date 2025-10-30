@@ -29,7 +29,10 @@
   "separateMinorPatch": true,
   "separateMultipleMajor": true,
   "separateMultipleMinor": true,
-  "lockFileMaintenance": { "enabled": true },
+  "lockFileMaintenance": { 
+    "enabled": true
+    "automerge": true,
+  },
 
   "packageRules": [
     {
