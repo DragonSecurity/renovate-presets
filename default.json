@@ -26,7 +26,6 @@
   "separateMinorPatch": true,
   "separateMultipleMajor": true,
   "separateMultipleMinor": true,
-  "schedule": ["after 08:00 and before 18:00"],
   "lockFileMaintenance": {
     "enabled": true,
     "automerge": true
@@ -66,32 +65,28 @@
       "automerge": true,
       "automergeType": "pr",
       "ignoreTests": true,
-      "groupName": "GitHub Actions",
-      "schedule": ["on friday before 10:00"]
+      "groupName": "GitHub Actions"
     },
     {
       "description": "Group JS prod deps",
       "matchManagers": ["npm", "pnpm", "yarn"],
       "matchDepTypes": ["dependencies", "optionalDependencies"],
       "excludeUpdateTypes": ["major"],
-      "groupName": "JS prod dependencies",
-      "schedule": ["on tuesday before 10:00"]
+      "groupName": "JS prod dependencies"
     },
     {
       "description": "Group JS dev deps",
       "matchManagers": ["npm", "pnpm", "yarn"],
       "matchDepTypes": ["devDependencies", "peerDependencies"],
       "excludeUpdateTypes": ["major"],
-      "groupName": "JS dev dependencies",
-      "schedule": ["on monday before 10:00"]
+      "groupName": "JS dev dependencies"
     },
     {
       "description": "Group @types/* packages",
       "matchManagers": ["npm", "pnpm", "yarn"],
       "matchPackagePatterns": ["^@types/"],
       "excludeUpdateTypes": ["major"],
-      "groupName": "TypeScript types",
-      "schedule": ["on monday before 10:00"]
+      "groupName": "TypeScript types"
     },
     {
       "description": "Group JS test tooling",
@@ -106,29 +101,25 @@
         "(?i)cypress"
       ],
       "excludeUpdateTypes": ["major"],
-      "groupName": "JS test tools",
-      "schedule": ["on monday before 10:00"]
+      "groupName": "JS test tools"
     },
     {
       "description": "Group Docker digests",
       "matchManagers": ["dockerfile", "docker-compose"],
       "matchUpdateTypes": ["digest"],
-      "groupName": "Docker digests",
-      "schedule": ["before 07:00"]
+      "groupName": "Docker digests"
     },
     {
       "description": "Group Docker version bumps",
       "matchManagers": ["dockerfile", "docker-compose"],
       "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "Docker versions",
-      "schedule": ["on wednesday before 10:00"]
+      "groupName": "Docker versions"
     },
     {
       "description": "Group Go modules",
       "matchManagers": ["gomod"],
       "excludeUpdateTypes": ["major"],
-      "groupName": "Go modules",
-      "schedule": ["on thursday before 10:00"]
+      "groupName": "Go modules"
     },
     {
       "description": "JS minors: optional cool-down; remove if you want truly instant",
@@ -142,8 +133,7 @@
       "automerge": false,
       "draftPR": false,
       "prPriority": 2,
-      "groupName": "Monthly Upgrade Day (majors)",
-      "schedule": ["after 09:00 and before 12:00 on the first thursday"]
+      "groupName": "Upgrade (majors)",
     }
   ]
 }
