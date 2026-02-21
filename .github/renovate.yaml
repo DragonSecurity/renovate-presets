@@ -123,7 +123,7 @@ packageRules:
     schedule:
       - "on monday before 10:00"
 
-  # Test ecosystem → Mondays (with dev)
+  # Group JS test tooling
   - description: "Group JS test tooling"
     matchManagers: ["npm", "pnpm", "yarn"]
     matchPackagePatterns:
@@ -136,6 +136,34 @@ packageRules:
       - "(?i)cypress"
     excludeUpdateTypes: ["major"]
     groupName: "JS test tools"
+    schedule:
+      - "on monday before 10:00"
+
+  # JS linting tools → Mondays (with dev)
+  - description: "Group JS linting tools"
+    matchManagers: ["npm", "pnpm", "yarn"]
+    matchPackagePatterns:
+      - "^eslint"
+      - "^@typescript-eslint/"
+      - "^prettier"
+      - "^@prettier/"
+    excludeUpdateTypes: ["major"]
+    groupName: "JS linting"
+    schedule:
+      - "on monday before 10:00"
+
+  # JS build tools → Mondays (with dev)
+  - description: "Group JS build tools"
+    matchManagers: ["npm", "pnpm", "yarn"]
+    matchPackagePatterns:
+      - "^webpack"
+      - "^vite"
+      - "^rollup"
+      - "^esbuild"
+      - "^@vitejs/"
+      - "^@rollup/"
+    excludeUpdateTypes: ["major"]
+    groupName: "JS build tools"
     schedule:
       - "on monday before 10:00"
 
@@ -164,6 +192,30 @@ packageRules:
     groupName: "Go modules"
     schedule:
       - "on thursday before 10:00"
+
+  # Python dependencies → Tuesdays (with prod)
+  - description: "Group Python dependencies"
+    matchManagers: ["pip_requirements", "pip_setup", "pipenv", "poetry"]
+    excludeUpdateTypes: ["major"]
+    groupName: "Python dependencies"
+    schedule:
+      - "on tuesday before 10:00"
+
+  # Rust dependencies → Thursdays (with Go)
+  - description: "Group Rust dependencies"
+    matchManagers: ["cargo"]
+    excludeUpdateTypes: ["major"]
+    groupName: "Rust dependencies"
+    schedule:
+      - "on thursday before 10:00"
+
+  # Ruby gems → Tuesdays (with prod)
+  - description: "Group Ruby gems"
+    matchManagers: ["bundler"]
+    excludeUpdateTypes: ["major"]
+    groupName: "Ruby gems"
+    schedule:
+      - "on tuesday before 10:00"
 
   # JS minors cool-down still applies
   - description: "JS minors: optional cool-down; remove if you want truly instant"

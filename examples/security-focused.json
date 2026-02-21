@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Example: Security-focused configuration with immediate vulnerability patching",
+  "extends": ["github>DragonSecurity/renovate-presets"],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": ["at any time"],
+    "addLabels": ["security", "critical"]
+  },
+  "osvVulnerabilityAlerts": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": ["at any time"]
+  },
+  "packageRules": [
+    {
+      "description": "Critical security updates bypass schedule",
+      "matchUpdateTypes": ["patch"],
+      "matchPackagePatterns": ["*"],
+      "schedule": ["at any time"]
+    }
+  ]
+}

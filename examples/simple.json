@@ -1,0 +1,5 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Example: Simple configuration extending the default preset",
+  "extends": ["github>DragonSecurity/renovate-presets"]
+}
