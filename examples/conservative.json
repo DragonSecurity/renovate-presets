@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Example: Conservative configuration with manual review for most updates",
+  "extends": ["github>DragonSecurity/renovate-presets"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "packageRules": [
+    {
+      "description": "Disable automerge for minor updates, require manual review",
+      "matchUpdateTypes": ["minor"],
+      "automerge": false
+    },
+    {
+      "description": "Keep only security automerge enabled",
+      "matchUpdateTypes": ["patch"],
+      "automerge": false
+    }
+  ],
+  "dependencyDashboard": true,
+  "dependencyDashboardApproval": true
+}

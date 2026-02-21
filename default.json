@@ -59,7 +59,7 @@
       "postUpdateOptions": ["gomodTidy"]
     },
     {
-      "description": "GitHub Actions patch/minor allowed (Fridays AM)",
+      "description": "GitHub Actions patch/minor allowed",
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["patch", "minor"],
       "automerge": true,
@@ -104,6 +104,32 @@
       "groupName": "JS test tools"
     },
     {
+      "description": "Group JS linting tools",
+      "matchManagers": ["npm", "pnpm", "yarn"],
+      "matchPackagePatterns": [
+        "^eslint",
+        "^@typescript-eslint/",
+        "^prettier",
+        "^@prettier/"
+      ],
+      "excludeUpdateTypes": ["major"],
+      "groupName": "JS linting"
+    },
+    {
+      "description": "Group JS build tools",
+      "matchManagers": ["npm", "pnpm", "yarn"],
+      "matchPackagePatterns": [
+        "^webpack",
+        "^vite",
+        "^rollup",
+        "^esbuild",
+        "^@vitejs/",
+        "^@rollup/"
+      ],
+      "excludeUpdateTypes": ["major"],
+      "groupName": "JS build tools"
+    },
+    {
       "description": "Group Docker digests",
       "matchManagers": ["dockerfile", "docker-compose"],
       "matchUpdateTypes": ["digest"],
@@ -122,18 +148,36 @@
       "groupName": "Go modules"
     },
     {
+      "description": "Group Python dependencies",
+      "matchManagers": ["pip_requirements", "pip_setup", "pipenv", "poetry"],
+      "excludeUpdateTypes": ["major"],
+      "groupName": "Python dependencies"
+    },
+    {
+      "description": "Group Rust dependencies",
+      "matchManagers": ["cargo"],
+      "excludeUpdateTypes": ["major"],
+      "groupName": "Rust dependencies"
+    },
+    {
+      "description": "Group Ruby gems",
+      "matchManagers": ["bundler"],
+      "excludeUpdateTypes": ["major"],
+      "groupName": "Ruby gems"
+    },
+    {
       "description": "JS minors: optional cool-down; remove if you want truly instant",
       "matchManagers": ["npm", "pnpm", "yarn"],
       "matchUpdateTypes": ["minor"],
       "minimumReleaseAge": "3 days"
     },
     {
-      "description": "Route ALL major updates to a monthly upgrade day",
+      "description": "Route ALL major updates to a monthly upgrade review",
       "matchUpdateTypes": ["major"],
       "automerge": false,
       "draftPR": false,
       "prPriority": 2,
-      "groupName": "Upgrade (majors)",
+      "groupName": "Major version upgrades"
     }
   ]
 }

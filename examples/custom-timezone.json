@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Example: Custom timezone and schedule for US East Coast team",
+  "extends": ["github>DragonSecurity/renovate-presets"],
+  "timezone": "America/New_York",
+  "schedule": ["after 9am and before 5pm every weekday"],
+  "packageRules": [
+    {
+      "description": "JavaScript updates on Monday mornings",
+      "matchManagers": ["npm", "pnpm", "yarn"],
+      "schedule": ["before 11am on monday"]
+    },
+    {
+      "description": "Docker updates on Wednesday mornings",
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "schedule": ["before 11am on wednesday"]
+    }
+  ]
+}

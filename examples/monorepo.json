@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Example: Monorepo configuration with aggressive grouping and automerge",
+  "extends": ["github>DragonSecurity/renovate-presets"],
+  "prConcurrentLimit": 10,
+  "prHourlyLimit": 5,
+  "packageRules": [
+    {
+      "description": "Group all non-major updates into single PR per manager",
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "All non-major updates"
+    },
+    {
+      "description": "Automerge all non-major if tests pass",
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "ignoreTests": false
+    }
+  ],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**"
+  ]
+}
