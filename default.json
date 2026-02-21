@@ -59,7 +59,7 @@
       "postUpdateOptions": ["gomodTidy"]
     },
     {
-      "description": "GitHub Actions patch/minor allowed",
+      "description": "GitHub Actions patch/minor automerge",
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["patch", "minor"],
       "automerge": true,
@@ -177,7 +177,7 @@
       "automerge": false,
       "draftPR": false,
       "prPriority": 2,
-      "groupName": "Major version upgrades"
+      "groupName": "Monthly major upgrades"
     }
   ]
 }
