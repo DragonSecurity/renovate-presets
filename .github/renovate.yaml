@@ -19,7 +19,6 @@ extends:
 # PR cadence / hygiene
 rebaseWhen: auto
 recreateWhen: auto
-recreateClosed: true
 prNotPendingHours: 12         # Delay if CI status is pending
 pruneStaleBranches: true
 rollbackPrs: true
@@ -63,6 +62,7 @@ vulnerabilityAlerts:
 osvVulnerabilityAlerts:
   enabled: true
   automerge: true
+  addLabels: ["security"]
 
 packageRules:
   # Instant, no-PR updates for the safest classes
@@ -117,7 +117,7 @@ packageRules:
   # Type definitions → Mondays (with dev)
   - description: "Group @types/* packages"
     matchManagers: ["npm", "pnpm", "yarn"]
-    matchPackagePatterns: ["^@types/"]
+    matchPackageNames: ["@types/*"]
     excludeUpdateTypes: ["major"]
     groupName: "TypeScript types"
     schedule:
@@ -126,14 +126,14 @@ packageRules:
   # Group JS test tooling
   - description: "Group JS test tooling"
     matchManagers: ["npm", "pnpm", "yarn"]
-    matchPackagePatterns:
-      - "(?i)jest"
-      - "(?i)vitest"
-      - "^@testing-library/"
-      - "(?i)mocha"
-      - "(?i)chai"
-      - "(?i)playwright"
-      - "(?i)cypress"
+    matchPackageNames:
+      - "*jest*"
+      - "*vitest*"
+      - "@testing-library/*"
+      - "*mocha*"
+      - "*chai*"
+      - "*playwright*"
+      - "*cypress*"
     excludeUpdateTypes: ["major"]
     groupName: "JS test tools"
     schedule:
@@ -142,11 +142,11 @@ packageRules:
   # JS linting tools → Mondays (with dev)
   - description: "Group JS linting tools"
     matchManagers: ["npm", "pnpm", "yarn"]
-    matchPackagePatterns:
-      - "^eslint"
-      - "^@typescript-eslint/"
-      - "^prettier"
-      - "^@prettier/"
+    matchPackageNames:
+      - "eslint*"
+      - "@typescript-eslint/*"
+      - "prettier*"
+      - "@prettier/*"
     excludeUpdateTypes: ["major"]
     groupName: "JS linting"
     schedule:
@@ -155,13 +155,13 @@ packageRules:
   # JS build tools → Mondays (with dev)
   - description: "Group JS build tools"
     matchManagers: ["npm", "pnpm", "yarn"]
-    matchPackagePatterns:
-      - "^webpack"
-      - "^vite"
-      - "^rollup"
-      - "^esbuild"
-      - "^@vitejs/"
-      - "^@rollup/"
+    matchPackageNames:
+      - "webpack*"
+      - "vite*"
+      - "rollup*"
+      - "esbuild*"
+      - "@vitejs/*"
+      - "@rollup/*"
     excludeUpdateTypes: ["major"]
     groupName: "JS build tools"
     schedule:
@@ -227,7 +227,6 @@ packageRules:
   - description: "Route ALL major updates to a monthly upgrade day"
     matchUpdateTypes: ["major"]
     automerge: false
-    draftPR: false
     prPriority: 2
     groupName: "Monthly Upgrade Day (majors)"
     # Example: first Thursday of each month, 09:00–12:00
