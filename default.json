@@ -11,7 +11,6 @@
   ],
   "rebaseWhen": "auto",
   "recreateWhen": "auto",
-  "recreateClosed": true,
   "prNotPendingHours": 12,
   "pruneStaleBranches": true,
   "rollbackPrs": true,
@@ -37,7 +36,8 @@
   },
   "osvVulnerabilityAlerts": {
     "enabled": true,
-    "automerge": true
+    "automerge": true,
+    "addLabels": ["security"]
   },
   "packageRules": [
     {
@@ -84,21 +84,21 @@
     {
       "description": "Group @types/* packages",
       "matchManagers": ["npm", "pnpm", "yarn"],
-      "matchPackagePatterns": ["^@types/"],
+      "matchPackageNames": ["@types/*"],
       "excludeUpdateTypes": ["major"],
       "groupName": "TypeScript types"
     },
     {
       "description": "Group JS test tooling",
       "matchManagers": ["npm", "pnpm", "yarn"],
-      "matchPackagePatterns": [
-        "(?i)jest",
-        "(?i)vitest",
-        "^@testing-library/",
-        "(?i)mocha",
-        "(?i)chai",
-        "(?i)playwright",
-        "(?i)cypress"
+      "matchPackageNames": [
+        "*jest*",
+        "*vitest*",
+        "@testing-library/*",
+        "*mocha*",
+        "*chai*",
+        "*playwright*",
+        "*cypress*"
       ],
       "excludeUpdateTypes": ["major"],
       "groupName": "JS test tools"
@@ -106,11 +106,11 @@
     {
       "description": "Group JS linting tools",
       "matchManagers": ["npm", "pnpm", "yarn"],
-      "matchPackagePatterns": [
-        "^eslint",
-        "^@typescript-eslint/",
-        "^prettier",
-        "^@prettier/"
+      "matchPackageNames": [
+        "eslint*",
+        "@typescript-eslint/*",
+        "prettier*",
+        "@prettier/*"
       ],
       "excludeUpdateTypes": ["major"],
       "groupName": "JS linting"
@@ -118,13 +118,13 @@
     {
       "description": "Group JS build tools",
       "matchManagers": ["npm", "pnpm", "yarn"],
-      "matchPackagePatterns": [
-        "^webpack",
-        "^vite",
-        "^rollup",
-        "^esbuild",
-        "^@vitejs/",
-        "^@rollup/"
+      "matchPackageNames": [
+        "webpack*",
+        "vite*",
+        "rollup*",
+        "esbuild*",
+        "@vitejs/*",
+        "@rollup/*"
       ],
       "excludeUpdateTypes": ["major"],
       "groupName": "JS build tools"
@@ -175,7 +175,6 @@
       "description": "Route ALL major updates to a monthly upgrade review",
       "matchUpdateTypes": ["major"],
       "automerge": false,
-      "draftPR": false,
       "prPriority": 2,
       "groupName": "Monthly major upgrades"
     }
