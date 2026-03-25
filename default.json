@@ -17,6 +17,12 @@
   "rollbackPrs": true,
   "rangeStrategy": "bump",
   "dependencyDashboard": true,
+  "dependencyDashboardTitle": "Organization Security & Dependency Overview",
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "addLabels": ["security", "automated-fix"]
+  }
   "dependencyDashboardAutoclose": true,
   "minimumReleaseAge": "3 days",
   "labels": ["dependencies"],
