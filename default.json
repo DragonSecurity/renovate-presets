@@ -18,17 +18,19 @@
   "rangeStrategy": "bump",
   "dependencyDashboard": true,
   "dependencyDashboardAutoclose": true,
+  "minimumReleaseAge": "3 days",
   "labels": ["dependencies"],
   "prConcurrentLimit": 20,
   "prHourlyLimit": 10,
-  "platformAutomerge": false,
+  "platformAutomerge": true,
   "automergeStrategy": "squash",
   "separateMinorPatch": true,
   "separateMultipleMajor": true,
   "separateMultipleMinor": true,
   "lockFileMaintenance": {
     "enabled": true,
-    "automerge": true
+    "automerge": true,
+    "automergeType": "branch"
   },
   "vulnerabilityAlerts": {
     "enabled": true,
@@ -41,17 +43,18 @@
   },
   "packageRules": [
     {
-      "description": "Instant, no-PR updates for safest classes",
-      "matchUpdateTypes": ["patch", "pin", "digest", "lockFileMaintenance"],
-      "automerge": true,
-      "automergeType": "branch"
+      "description": "Global safety: Wait 3 days before any automerge and require passing CI",
+      "matchPackagePatterns": ["*"],
+      "minimumReleaseAge": "3 days",
+      "ignoreTests": false,
+      "automergeType": "pr"
     },
     {
-      "description": "Minor updates: PR-based but merge immediately (skip waiting for CI)",
-      "matchUpdateTypes": ["minor"],
+      "description": "Instant branch-based updates for ultra-low-risk internal maintenance",
+      "matchUpdateTypes": ["pin", "digest", "lockFileMaintenance"],
       "automerge": true,
-      "automergeType": "pr",
-      "ignoreTests": true
+      "automergeType": "branch",
+      "minimumReleaseAge": null
     },
     {
       "description": "Go tidy after updates",
@@ -59,123 +62,15 @@
       "postUpdateOptions": ["gomodTidy"]
     },
     {
-      "description": "GitHub Actions patch/minor automerge",
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["patch", "minor"],
-      "automerge": true,
-      "automergeType": "pr",
-      "ignoreTests": true,
-      "groupName": "GitHub Actions"
-    },
-    {
-      "description": "Group JS prod deps",
-      "matchManagers": ["npm", "pnpm", "yarn"],
-      "matchDepTypes": ["dependencies", "optionalDependencies"],
+      "description": "Group common ecosystems to reduce PR noise",
+      "matchManagers": ["npm", "pnpm", "yarn", "gomod", "pip_requirements", "cargo"],
       "excludeUpdateTypes": ["major"],
-      "groupName": "JS prod dependencies"
+      "groupName": "{{{manager}}} non-major updates"
     },
     {
-      "description": "Group JS dev deps",
-      "matchManagers": ["npm", "pnpm", "yarn"],
-      "matchDepTypes": ["devDependencies", "peerDependencies"],
-      "excludeUpdateTypes": ["major"],
-      "groupName": "JS dev dependencies"
-    },
-    {
-      "description": "Group @types/* packages",
-      "matchManagers": ["npm", "pnpm", "yarn"],
-      "matchPackagePatterns": ["^@types/"],
-      "excludeUpdateTypes": ["major"],
-      "groupName": "TypeScript types"
-    },
-    {
-      "description": "Group JS test tooling",
-      "matchManagers": ["npm", "pnpm", "yarn"],
-      "matchPackagePatterns": [
-        "(?i)jest",
-        "(?i)vitest",
-        "^@testing-library/",
-        "(?i)mocha",
-        "(?i)chai",
-        "(?i)playwright",
-        "(?i)cypress"
-      ],
-      "excludeUpdateTypes": ["major"],
-      "groupName": "JS test tools"
-    },
-    {
-      "description": "Group JS linting tools",
-      "matchManagers": ["npm", "pnpm", "yarn"],
-      "matchPackagePatterns": [
-        "^eslint",
-        "^@typescript-eslint/",
-        "^prettier",
-        "^@prettier/"
-      ],
-      "excludeUpdateTypes": ["major"],
-      "groupName": "JS linting"
-    },
-    {
-      "description": "Group JS build tools",
-      "matchManagers": ["npm", "pnpm", "yarn"],
-      "matchPackagePatterns": [
-        "^webpack",
-        "^vite",
-        "^rollup",
-        "^esbuild",
-        "^@vitejs/",
-        "^@rollup/"
-      ],
-      "excludeUpdateTypes": ["major"],
-      "groupName": "JS build tools"
-    },
-    {
-      "description": "Group Docker digests",
-      "matchManagers": ["dockerfile", "docker-compose"],
-      "matchUpdateTypes": ["digest"],
-      "groupName": "Docker digests"
-    },
-    {
-      "description": "Group Docker version bumps",
-      "matchManagers": ["dockerfile", "docker-compose"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "Docker versions"
-    },
-    {
-      "description": "Group Go modules",
-      "matchManagers": ["gomod"],
-      "excludeUpdateTypes": ["major"],
-      "groupName": "Go modules"
-    },
-    {
-      "description": "Group Python dependencies",
-      "matchManagers": ["pip_requirements", "pip_setup", "pipenv", "poetry"],
-      "excludeUpdateTypes": ["major"],
-      "groupName": "Python dependencies"
-    },
-    {
-      "description": "Group Rust dependencies",
-      "matchManagers": ["cargo"],
-      "excludeUpdateTypes": ["major"],
-      "groupName": "Rust dependencies"
-    },
-    {
-      "description": "Group Ruby gems",
-      "matchManagers": ["bundler"],
-      "excludeUpdateTypes": ["major"],
-      "groupName": "Ruby gems"
-    },
-    {
-      "description": "JS minors: optional cool-down; remove if you want truly instant",
-      "matchManagers": ["npm", "pnpm", "yarn"],
-      "matchUpdateTypes": ["minor"],
-      "minimumReleaseAge": "3 days"
-    },
-    {
-      "description": "Route ALL major updates to a monthly upgrade review",
+      "description": "Route ALL major updates to a manual review",
       "matchUpdateTypes": ["major"],
       "automerge": false,
-      "draftPR": false,
       "prPriority": 2,
       "groupName": "Monthly major upgrades"
     }
