@@ -48,7 +48,8 @@
       "matchPackagePatterns": ["*"],
       "minimumReleaseAge": "3 days",
       "ignoreTests": false,
-      "automergeType": "pr"
+      "automerge": true,          // <--- ADD THIS
+      "automergeType": "branch"   // <--- CHANGE "pr" TO "branch" FOR MORE RELIABLE MERGING
     },
     {
       "description": "Instant branch-based updates for ultra-low-risk internal maintenance",
@@ -58,20 +59,16 @@
       "minimumReleaseAge": null
     },
     {
-      "description": "Go tidy after updates",
-      "matchManagers": ["gomod"],
-      "postUpdateOptions": ["gomodTidy"]
-    },
-    {
-      "description": "Group common ecosystems to reduce PR noise",
+      "description": "Group non-major updates and enable automerge",
       "matchManagers": ["npm", "pnpm", "yarn", "gomod", "pip_requirements", "cargo"],
       "excludeUpdateTypes": ["major"],
-      "groupName": "{{{manager}}} non-major updates"
+      "groupName": "{{{manager}}} non-major updates",
+      "automerge": true           // <--- ENSURE THIS IS EXPLICIT
     },
     {
       "description": "Route ALL major updates to a manual review",
       "matchUpdateTypes": ["major"],
-      "automerge": false,
+      "automerge": false,         // <--- KEEPS MAJORS SAFE
       "prPriority": 2,
       "groupName": "Monthly major upgrades"
     }
