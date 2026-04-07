@@ -48,8 +48,8 @@
       "matchPackagePatterns": ["*"],
       "minimumReleaseAge": "3 days",
       "ignoreTests": false,
-      "automerge": true,          // <--- ADD THIS
-      "automergeType": "branch"   // <--- CHANGE "pr" TO "branch" FOR MORE RELIABLE MERGING
+      "automerge": true,
+      "automergeType": "branch"
     },
     {
       "description": "Instant branch-based updates for ultra-low-risk internal maintenance",
@@ -63,12 +63,12 @@
       "matchManagers": ["npm", "pnpm", "yarn", "gomod", "pip_requirements", "cargo"],
       "excludeUpdateTypes": ["major"],
       "groupName": "{{{manager}}} non-major updates",
-      "automerge": true           // <--- ENSURE THIS IS EXPLICIT
+      "automerge": true
     },
     {
       "description": "Route ALL major updates to a manual review",
       "matchUpdateTypes": ["major"],
-      "automerge": false,         // <--- KEEPS MAJORS SAFE
+      "automerge": false,
       "prPriority": 2,
       "groupName": "Monthly major upgrades"
     }
