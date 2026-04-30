@@ -72,5 +72,12 @@
       "prPriority": 2,
       "groupName": "Monthly major upgrades"
     }
-  ]
+  ],
+  "kubernetes": {                                                                                                                                                                                    
+      "managerFilePatterns": [
+        "/(^|/)apps/.+\\.ya?ml$/",                                                                                                                                                                     
+        "/(^|/)infrastructure/.+\\.ya?ml$/",                                                                                                                                                           
+        "/(^|/)clusters/.+\\.ya?ml$/"                                                                                                                                                                  
+      ]                                                                                                                                                                                                
+    }  
 }
