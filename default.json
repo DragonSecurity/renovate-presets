@@ -4,6 +4,7 @@
     "config:recommended",
     ":semanticCommits",
     ":semanticCommitTypeAll(chore)",
+    ":gitSignOff",
     ":timezone(Europe/Dublin)",
     "helpers:pinGitHubActionDigests",
     "docker:pinDigests",
