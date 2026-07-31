@@ -17,6 +17,7 @@
   "pruneStaleBranches": true,
   "rollbackPrs": true,
   "rangeStrategy": "bump",
+  "postUpdateOptions": ["gomodUpdateImportPaths", "gomodTidy"],
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Organization Security & Dependency Overview",
   "dependencyDashboardAutoclose": true,
