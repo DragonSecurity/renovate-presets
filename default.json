@@ -74,11 +74,23 @@
       "groupName": "Monthly major upgrades"
     }
   ],
-  "kubernetes": {                                                                                                                                                                                    
+  "kubernetes": {
+    "managerFilePatterns": [
+      "/(^|/)apps/.+\\.ya?ml$/",
+      "/(^|/)infrastructure/.+\\.ya?ml$/",
+      "/(^|/)clusters/.+\\.ya?ml$/"
+    ]
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Track gomgr release version (single source of truth in .gomgr-version)",
       "managerFilePatterns": [
-        "/(^|/)apps/.+\\.ya?ml$/",                                                                                                                                                                     
-        "/(^|/)infrastructure/.+\\.ya?ml$/",                                                                                                                                                           
-        "/(^|/)clusters/.+\\.ya?ml$/"                                                                                                                                                                  
-      ]                                                                                                                                                                                                
-    }  
+        "/^\\.gomgr-version$/"
+      ],
+      "matchStrings": ["(?<currentValue>v\\d+\\.\\d+\\.\\d+)"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "DragonSecurity/gomgr"
+    }
+  ]
 }
