@@ -32,7 +32,7 @@
   "lockFileMaintenance": {
     "enabled": true,
     "automerge": true,
-    "automergeType": "branch"
+    "automergeType": "pr"
   },
   "vulnerabilityAlerts": {
     "enabled": true,
@@ -50,13 +50,13 @@
       "minimumReleaseAge": "3 days",
       "ignoreTests": false,
       "automerge": true,
-      "automergeType": "branch"
+      "automergeType": "pr"
     },
     {
       "description": "Instant branch-based updates for ultra-low-risk internal maintenance",
       "matchUpdateTypes": ["pin", "digest", "lockFileMaintenance"],
       "automerge": true,
-      "automergeType": "branch",
+      "automergeType": "pr",
       "minimumReleaseAge": null
     },
     {
