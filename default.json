@@ -12,7 +12,6 @@
   ],
   "rebaseWhen": "auto",
   "recreateWhen": "auto",
-  "recreateClosed": true,
   "prNotPendingHours": 12,
   "pruneStaleBranches": true,
   "rollbackPrs": true,
@@ -39,10 +38,7 @@
     "automerge": true,
     "addLabels": ["security", "automated-fix"]
   },
-  "osvVulnerabilityAlerts": {
-    "enabled": true,
-    "automerge": true
-  },
+  "osvVulnerabilityAlerts": true,
   "packageRules": [
     {
       "description": "Generator templates are scaffold owned by the projects they generate, not dependencies of the repository holding them. A digest pinned here is baked into every project generated afterwards and cannot be updated without regenerating, so a base-image CVE never reaches them.",
@@ -51,7 +47,7 @@
     },
     {
       "description": "Global safety: Wait 3 days before any automerge and require passing CI",
-      "matchPackagePatterns": ["*"],
+      "matchPackageNames": ["*"],
       "minimumReleaseAge": "3 days",
       "ignoreTests": false,
       "automerge": true,
@@ -67,7 +63,7 @@
     {
       "description": "Group non-major updates and enable automerge",
       "matchManagers": ["npm", "pnpm", "yarn", "gomod", "pip_requirements", "cargo"],
-      "excludeUpdateTypes": ["major"],
+      "matchUpdateTypes": ["minor", "patch"],
       "groupName": "{{{manager}}} non-major updates",
       "automerge": true
     },
