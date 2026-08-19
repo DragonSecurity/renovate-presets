@@ -41,11 +41,6 @@
   "osvVulnerabilityAlerts": true,
   "packageRules": [
     {
-      "description": "Generator templates are scaffold owned by the projects they generate, not dependencies of the repository holding them. A digest pinned here is baked into every project generated afterwards and cannot be updated without regenerating, so a base-image CVE never reaches them.",
-      "matchFileNames": ["internal/generator/templates/**"],
-      "enabled": false
-    },
-    {
       "description": "Global safety: Wait 3 days before any automerge and require passing CI",
       "matchPackageNames": ["*"],
       "minimumReleaseAge": "3 days",
