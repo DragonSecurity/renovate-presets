@@ -1,0 +1,11 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "For repositories that generate other projects. Files under a generator's template root are scaffold owned by the project they are generated into, not dependencies of the repository holding them.",
+  "packageRules": [
+    {
+      "description": "A pinned digest here is baked into every project generated afterwards and cannot be updated without regenerating, so a base-image CVE never reaches them. The floating tag they ship with is picked up on the generated project's next rebuild. Repositories whose template root is elsewhere should extend this list.",
+      "matchFileNames": ["internal/generator/templates/**"],
+      "enabled": false
+    }
+  ]
+}
