@@ -5,23 +5,51 @@
     {
       "description": "Workflow templates carry a .tmpl suffix, so the github-actions manager never matches them and their action versions are frozen at whatever was current when someone last edited them by hand. Generated projects then ship workflows that stop running -- the 2026 action majors are Node 20 to Node 24 migrations and Node 20 is being retired -- rather than workflows that merely lag.",
       "customType": "regex",
-      "managerFilePatterns": ["/\\.github/workflows/.*\\.ya?ml\\.tmpl$/"],
-      "matchStrings": ["uses:\\s+(?<depName>[\\w.-]+/[\\w.-]+)(?:/[\\w.-]+)*@(?<currentValue>\\S+)"],
+      "managerFilePatterns": [
+        "/\\.github/workflows/.*\\.ya?ml\\.tmpl$/"
+      ],
+      "matchStrings": [
+        "uses:\\s+(?<depName>[\\w.-]+/[\\w.-]+)(?:/[\\w.-]+)*@(?<currentValue>\\S+)"
+      ],
       "datasourceTemplate": "github-tags"
     }
   ],
   "packageRules": [
     {
       "description": "Base images in a template must stay on their floating tag. A digest pinned here is baked into every project generated afterwards, which cannot update it without regenerating, so a base-image CVE never reaches them; the floating tag is picked up on their next rebuild. Scoped to the dockerfile manager so it does not also switch off the workflow templates above, which need the opposite treatment.",
-      "matchFileNames": ["internal/generator/templates/**"],
-      "matchManagers": ["dockerfile"],
+      "matchFileNames": [
+        "internal/generator/templates/**"
+      ],
+      "matchManagers": [
+        "dockerfile"
+      ],
       "enabled": false
     },
     {
       "description": "The same argument against pinning a base image applies to pinning an action digest into a generated project: a floating major tag keeps receiving patches wherever the project ends up, a digest does not. Stated explicitly because the org default extends helpers:pinGitHubActionDigests.",
-      "matchManagers": ["custom.regex"],
-      "matchFileNames": ["**/.github/workflows/*.tmpl"],
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchFileNames": [
+        "**/.github/workflows/*.tmpl"
+      ],
       "pinDigests": false
+    },
+    {
+      "description": "Only a new MAJOR of an action is worth a pull request in a template workflow. The pinned tag is a floating major on purpose \u2014 the generated project receives a copy of this file, and a tag that keeps moving picks up patches wherever that project ends up, while an exact version freezes it the same way a base-image digest would. A major is different: the 2026 action majors are Node 20 to Node 24 runtime migrations that stop generated workflows running, so those must still be offered. Without this, github-tags treats every tag as a version and the org default separates minors, so one action walking v0.1 to v0.24 opened fourteen pull requests, each superseded by the next, and pinned the template to an exact version on the way.",
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchFileNames": [
+        "**/.github/workflows/*.tmpl"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest",
+        "pin"
+      ],
+      "enabled": false
     }
   ]
 }
