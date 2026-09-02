@@ -70,6 +70,20 @@
       "groupName": "Monthly major upgrades"
     },
     {
+      "description": "A rollback undoes a pin somebody chose on purpose, so it is never automerged. Renovate rolls back whenever the pinned version survives none of its own filters -- which minimumReleaseAge guarantees for any release pinned on the day it was cut, so the first-party bump below is the other half of this fix.",
+      "matchUpdateTypes": ["rollback"],
+      "automerge": false,
+      "addLabels": ["rollback"],
+      "prPriority": 10
+    },
+    {
+      "description": "First-party releases are trusted the moment they exist. The soak period is there to let somebody else find the bad release first, and there is no somebody else for our own code -- while waiting means every fresh pin of our own tag is filtered out and rolled back.",
+      "matchDatasources": ["github-releases", "github-tags", "go"],
+      "matchPackageNames": ["DragonSecurity/**", "github.com/DragonSecurity/**"],
+      "minimumReleaseAge": null,
+      "rollbackPrs": false
+    },
+    {
       "description": "Security engine bumps change what dragon detects, so a human reads the regression diff before they land",
       "matchDatasources": ["github-releases"],
       "matchPackageNames": [
