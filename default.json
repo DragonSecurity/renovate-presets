@@ -68,13 +68,56 @@
       "automerge": false,
       "prPriority": 2,
       "groupName": "Monthly major upgrades"
+    },
+    {
+      "description": "Security engine bumps change what dragon detects, so a human reads the regression diff before they land",
+      "matchDatasources": ["github-releases"],
+      "matchPackageNames": [
+        "aquasecurity/trivy",
+        "gitleaks/gitleaks",
+        "google/osv-scanner",
+        "opengrep/opengrep",
+        "zaproxy/zaproxy",
+        "schemathesis/schemathesis"
+      ],
+      "automerge": false,
+      "addLabels": ["security-engine"],
+      "prPriority": 5,
+      "groupName": "Security engines"
     }
   ],
-  "kubernetes": {                                                                                                                                                                                    
+  "kubernetes": {
+    "managerFilePatterns": [
+      "/(^|/)apps/.+\\.ya?ml$/",
+      "/(^|/)infrastructure/.+\\.ya?ml$/",
+      "/(^|/)clusters/.+\\.ya?ml$/"
+    ]
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Track gomgr release version (single source of truth in .gomgr-version)",
       "managerFilePatterns": [
-        "/(^|/)apps/.+\\.ya?ml$/",                                                                                                                                                                     
-        "/(^|/)infrastructure/.+\\.ya?ml$/",                                                                                                                                                           
-        "/(^|/)clusters/.+\\.ya?ml$/"                                                                                                                                                                  
-      ]                                                                                                                                                                                                
-    }  
+        "/^\\.gomgr-version$/"
+      ],
+      "matchStrings": ["(?<currentValue>v\\d+\\.\\d+\\.\\d+)"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "DragonSecurity/gomgr"
+    },
+    {
+      "customType": "regex",
+      "description": "Track pinned tool versions written as X_VERSION, using a '# renovate:' comment above the line to say where the version comes from",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/[^/]+\\.ya?ml$/",
+        "/(^|/)Dockerfile$/",
+        "/(^|/)Dockerfile\\.[^/]+$/"
+      ],
+      "matchStrings": [
+        "#\\s*renovate:\\s*datasource=(?<datasource>[a-z-]+?)\\s+depName=(?<depName>[^\\s]+?)(?:\\s+versioning=(?<versioning>[^\\s]+?))?\\s*\\n\\s*(?:ARG\\s+)?[A-Za-z0-9_]+_VERSION\\s*[:=]\\s*[\"']?(?<currentValue>[0-9][^\"'\\s]*)[\"']?"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    }
+  ]
 }
