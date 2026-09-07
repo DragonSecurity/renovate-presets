@@ -1,0 +1,66 @@
+{
+  "_comment": "Dragon Dev Buddy project profile. Read by every skill in the pack. Regenerate with the buddy-setup skill.",
+  "project": {
+    "name": "renovate-presets",
+    "what_it_is": "A shared Renovate configuration preset library for DragonSecurity. Consuming repos extend it via 'github>DragonSecurity/renovate-presets'; it governs update scheduling, grouping, and automerge policy across the org.",
+    "primary_language": "json",
+    "stack": [
+      "renovate-config",
+      "json",
+      "yaml",
+      "github-actions-ecosystem",
+      "docker-ecosystem",
+      "npm-ecosystem",
+      "gomod-ecosystem",
+      "kubernetes-manifests"
+    ],
+    "runtime": "none — declarative config consumed by the Renovate bot at run time",
+    "deploy_target": "GitHub repository; presets resolve live off the default branch, unpinned",
+    "repo_url": "git@github.com:DragonSecurity/renovate-presets.git"
+  },
+  "security": {
+    "exposure": "public",
+    "_exposure_note": "Public GitHub repo. Consumers are DragonSecurity org repos. The read surface is public; the write surface (default branch) is the sensitive one.",
+    "data_sensitivity": "none",
+    "_data_sensitivity_note": "No PII, no credentials, no secrets in scope. The risk model here is integrity and supply chain, not confidentiality: this repo decides what merges into other repos without human review.",
+    "compliance": [],
+    "auth_model": "none in-repo; downstream effect is mediated by the Renovate bot's write permissions on consuming repos",
+    "trust_boundaries": [
+      "Public package registries (npm, Docker Hub, Go proxy, GitHub Actions marketplace) -> Renovate. Upstream package contents are untrusted input.",
+      "This preset -> every consuming repo. Presets resolve live off the default branch and are not pinned by consumers, so a merged change here takes effect downstream immediately and without downstream review.",
+      "Renovate bot -> consuming repos. Branch-type automerge writes to protected-branch targets without opening a PR, bypassing code review entirely."
+    ],
+    "known_risk_areas": [
+      "default.json packageRules[0] matches all packages ('matchPackagePatterns': ['*']) with automerge: true and automergeType: 'branch' — every non-major update across every ecosystem merges without a PR or human review.",
+      "vulnerabilityAlerts and osvVulnerabilityAlerts both automerge, so a poisoned or mis-tagged advisory-driven bump lands unreviewed.",
+      "No branch protection recorded on the default branch of this repo, which is the only gate on org-wide automerge policy.",
+      "No CI validation of preset syntax; test.json currently contains invalid JSON (trailing comma) and would fail Renovate parsing if referenced.",
+      "'matchPackagePatterns' is deprecated in current Renovate versions in favour of 'matchPackageNames' — a silent rule-matching failure is a policy failure."
+    ]
+  },
+  "engagement": {
+    "_comment": "Empty: internal work on the org's own repository. No offensive engagement recorded.",
+    "authorized_scope": [],
+    "out_of_scope": [],
+    "authorization_reference": null
+  },
+  "practice": {
+    "test_command": null,
+    "lint_command": null,
+    "build_command": null,
+    "ci": "none — no .github/workflows present",
+    "sca_tool": null,
+    "sast_tool": null,
+    "secret_scanner": null,
+    "package_manager": null,
+    "lockfile_present": false
+  },
+  "buddy": {
+    "name": "Emberchaos",
+    "enabled": true
+  },
+  "output": {
+    "reports_dir": ".dragon-buddy/reports"
+  },
+  "skill_level": "advanced"
+}

@@ -50,7 +50,7 @@ extends:
 Out-of-the-box configuration for:
 - JavaScript/TypeScript (npm, pnpm, yarn)
 - Docker (Dockerfile, docker-compose)
-- Go modules
+- Go modules (with import-path rewriting on major upgrades)
 - GitHub Actions
 - TypeScript type definitions
 
@@ -81,6 +81,23 @@ The full-featured preset with intelligent scheduling. Best for:
 1. **Instant (Branch)**: Patches, pins, digests, lockfile maintenance
 2. **Fast (PR, no CI wait)**: Minor versions, GitHub Actions patches/minors
 3. **Controlled (PR, manual merge)**: Major versions (monthly)
+
+### Go Major Upgrades
+For Go modules the major version is part of the import path, so `.../go-github/v90` and
+`.../go-github/v91` are different packages. Bumping `go.mod` alone therefore adds a
+dependency nothing imports: `go mod tidy` deletes it again, and the pull request passes
+CI green while changing nothing.
+
+Two `postUpdateOptions` close that:
+
+- **`gomodUpdateImportPaths`** rewrites the import paths across the repository when a
+  major update lands, which is the part that makes the upgrade real.
+- **`gomodTidy`** runs `go mod tidy` afterwards, so a `require` line nothing links
+  against cannot survive into the PR.
+
+Genuine API breaking changes still need a person — no tool can rename a struct field for
+you. The difference is that the PR now fails CI honestly instead of passing while doing
+nothing.
 
 ### Cooldown Periods
 - JavaScript minor updates: 3-day minimum release age
