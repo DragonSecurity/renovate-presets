@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "customManagers": [],
+  "packageRules": [
+    {
+      "description": "Automerge non-major updates",
+      "matchUpdateTypes": [
+        "patch",
+        "digest",
+        "pin",
+        "pinDigest",
+        "bump",
+        "minor",
+        "lockFileMaintenance"
+      ],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["security"],
+      "automerge": true,
+      "automergeType": "pr",
+      "prPriority": 1
+    },
+    {
+      "matchManagers": ["npm", "pnpm", "yarn"],
+      "matchUpdateTypes": ["minor"],
+      "minimumReleaseAge": "3 days"
+    },
+  ],
+  "extends": [
+    ":semanticCommits"
+  ]
+}
