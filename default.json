@@ -99,6 +99,12 @@
       "addLabels": ["security-engine"],
       "prPriority": 5,
       "groupName": "Security engines"
+    },
+    {
+      "description": "TypeScript is held below 7 while @hey-api/openapi-ts still needs 6. The generator reads the TypeScript compiler's internals, and they moved in 7: it dies with 'Cannot read properties of undefined (reading AnyKeyword)', no SDK is produced, and the gate fails in every repository that generates a client from its OpenAPI document. Its peer range ends at 6 and no published release supports 7, so the upgrade cannot be taken by a person either -- an unheld major here is a pull request that can only ever be closed. Lift this as soon as a release supports 7; 6.x minors and patches keep flowing meanwhile.",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
     }
   ],
   "kubernetes": {
