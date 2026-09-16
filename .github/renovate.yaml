@@ -65,6 +65,15 @@ osvVulnerabilityAlerts:
   automerge: true
 
 packageRules:
+  # TypeScript 7 moved the compiler internals @hey-api/openapi-ts reads, so the
+  # generator crashes and no SDK is produced. Its peer range ends at 6 and no
+  # published release supports 7, so the major cannot be taken by hand either.
+  # Lift this when a release supports 7; 6.x keeps flowing meanwhile.
+  - description: "Hold TypeScript below 7 while @hey-api/openapi-ts still needs 6"
+    matchDatasources: ["npm"]
+    matchPackageNames: ["typescript"]
+    allowedVersions: "<7"
+
   # Instant, no-PR updates for the safest classes
   - description: "Instant, no-PR updates for safest classes"
     matchUpdateTypes: ["patch", "pin", "digest", "lockFileMaintenance"]

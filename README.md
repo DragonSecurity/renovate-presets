@@ -103,6 +103,21 @@ nothing.
 - JavaScript minor updates: 3-day minimum release age
 - Prevents merging bleeding-edge releases with potential issues
 
+### Version Holds
+A hold is for a major nobody can take yet. Without one Renovate re-offers it on every run,
+and the pull request can only ever be closed.
+
+- **TypeScript is held below 7** while `@hey-api/openapi-ts` still needs 6. The generator
+  reads the TypeScript compiler's internals, which moved in 7: it dies with
+  `Cannot read properties of undefined (reading AnyKeyword)`, produces no SDK, and the gate
+  fails in every repository that generates a client from its OpenAPI document. Its peer
+  range ends at 6, so the upgrade cannot be taken by hand either. TypeScript 6.x minors and
+  patches keep flowing.
+
+Each hold names the condition that ends it, so it is a dated decision rather than a policy.
+Lift this one — in `default.json` and `.github/renovate.yaml` — as soon as a released
+`@hey-api/openapi-ts` supports TypeScript 7.
+
 ### Rate Limiting
 - **Concurrent PRs**: 20 maximum
 - **Hourly PR Creation**: 10 maximum
